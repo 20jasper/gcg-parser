@@ -1,4 +1,12 @@
-# Axum production template
+# GCG parser
+
+A parser for "Generic Crossword Game" files
+
+GCG files are used as a standard for a variety of crossword games, most notably Scrabble
+
+## Specification
+
+This parser abides by the [Poslfit GCG specification](https://www.poslfit.com/scrabble/gcg/)
 
 ## Development
 
