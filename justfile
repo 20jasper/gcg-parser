@@ -20,7 +20,8 @@ lint:
 
 # commands to run before making a pull request
 prepublish:
-    just lint
+    RUSTFLAGS="-D warnings" just lint
     just format-check
     cargo diet --dry-run
     cargo publish --dry-run
+    cargo semver-checks
