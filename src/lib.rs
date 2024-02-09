@@ -14,7 +14,30 @@ pub struct Player {
 }
 
 impl Player {
-	/// The first token is the nickname, the rest are the full name
+	/// The player pragma indicates the nickname and full name of a player.
+	///
+	/// # Examples
+	///
+	/// ```
+	/// # use gcg_parser::Player;
+	///
+	/// let text = "#player1 xXFerrisXx Ferris The Crab";
+	/// let player = Player::build(text)?;
+	///
+	/// assert_eq!(
+	///     player,
+	///     Player {
+	///         nickname: "xXFerrisXx".to_string(),
+	///         full_name: "Ferris The Crab".to_string(),
+	///     }
+	/// );
+	///
+	/// # Ok::<(), gcg_parser::error::GcgError>(())
+	/// ```
+	///
+	/// # Errors
+	///
+	/// If the nickname or full name tokens are missing, a `MissingToken` error is returned with the position and text information.
 	pub fn build(text: &str) -> Result<Player> {
 		let mut tokens = text.splitn(3, ' ').skip(1);
 
@@ -44,25 +67,7 @@ impl Player {
 
 #[cfg(test)]
 mod tests {
-	use anyhow::Result;
-
 	use super::*;
-
-	#[test]
-	fn should_parse_player_name() -> Result<()> {
-		let text = "#player1 20jasper Jacob Asper";
-		let player = Player::build(text)?;
-
-		assert_eq!(
-			player,
-			Player {
-				nickname: "20jasper".to_string(),
-				full_name: "Jacob Asper".to_string(),
-			}
-		);
-
-		Ok(())
-	}
 
 	#[test]
 	fn should_return_error_with_field_name_and_position() {
