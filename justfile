@@ -26,6 +26,6 @@ lint:
 prepublish:
     RUSTFLAGS="-D warnings" just lint
     just format-check
-    cargo diet --dry-run
+    cargo diet -r --dry-run
     cargo publish --dry-run
     cargo semver-checks
