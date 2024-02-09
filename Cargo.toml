@@ -9,7 +9,8 @@ repository = "https://github.com/20jasper/gcg-parser"
 keywords = ["gcg", "parser", "scrabble", "crossword", "crossword"]
 edition = "2021"
 license = "Unlicense OR MIT"
-include = ["src/lib.rs", "README.md"]
+include = ["src/**/*", "README.md", "CHANGELOG.md"]
+
 
 [dependencies]
 displaydoc = "0.2.4"
