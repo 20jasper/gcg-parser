@@ -14,10 +14,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Player struct and missing token error
 
-### Other
-- Add PAT to actions/checkout
-- add changelog to prettierignore
-- Remove lints denying panicing in a function returning a result and missing docs
-- add test command and allow all warnings in dev and test commands
-- Use PAT in release action to allow workflows to run
-- fail on warnings and check for semver changes in prepublish command
