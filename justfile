@@ -1,6 +1,10 @@
 # build and run example query on save
 dev:
-    cargo watch --poll -q -c -w examples/ -x "run --example quick_dev -- --nocapture"
+    RUSTFLAGS="-A warnings" cargo watch --poll -q -c -w examples/ -x "run --example quick_dev -- --nocapture"
+
+# build and run tests on save
+test:
+    RUSTFLAGS="-A warnings" cargo watch --poll -q -c -w src/ -x "test"
 
 # format rust, justfile, and markdown
 format:
