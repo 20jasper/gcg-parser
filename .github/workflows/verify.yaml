@@ -44,3 +44,6 @@ jobs:
         run: cargo test --verbose
       - name: build
         run: cargo build --release --verbose
+
+      - name: pre publish
+        run: cargo publish --dry-run
