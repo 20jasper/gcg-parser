@@ -1,7 +1,15 @@
 [package]
 name = "gcg-parser"
 version = "0.1.0"
+authors = ["Jacob Asper <jacobasper191@gmail.com>"]
+description = "A parser for the GCG file format"
+documentation = "https://github.com/20jasper/gcg-parser"
+homepage = "https://github.com/20jasper/gcg-parser"
+repository = "https://github.com/20jasper/gcg-parser"
+keywords = ["gcg", "parser", "scrabble", "crossword", "generic crossword game"]
 edition = "2021"
+license = "Unlicense OR MIT"
+include = ["src/lib.rs", "README.md"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -17,6 +25,7 @@ unsafe-op-in-unsafe-fn = "deny"
 ffi-unwind-calls = "warn"
 let-underscore-drop = "warn"
 missing-abi = "warn"
+missing_docs = "warn"
 non-ascii-idents = "warn"
 unreachable-pub = "warn"
 variant-size-differences = "warn"
@@ -79,3 +88,7 @@ unnecessary_self_imports = "warn"
 unneeded_field_pattern = "warn"
 unseparated_literal_suffix = "warn"
 verbose_file_reads = "warn"
+
+[lints.rustdoc]
+broken_intra_doc_links = "warn"
+missing_crate_level_docs = "warn"

@@ -17,3 +17,10 @@ format-check:
 # lint rust
 lint:
     cargo clippy --all-targets --all-features
+
+# commands to run before making a pull request
+prepublish:
+    just lint
+    just format-check
+    cargo diet --dry-run
+    cargo publish --dry-run
