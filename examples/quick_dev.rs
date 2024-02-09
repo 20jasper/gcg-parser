@@ -1,5 +1,6 @@
-#![allow(missing_docs)]
-
+use gcg_parser::Player;
 fn main() {
-	println!("Hello, world!");
+	let text = "#player1 20jasper";
+
+	println!("{}", Player::build(text).unwrap_err());
 }
