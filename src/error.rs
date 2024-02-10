@@ -4,11 +4,13 @@ use thiserror::Error;
 #[derive(Display, Error, Debug)]
 #[allow(clippy::module_name_repetitions)]
 pub enum GcgError {
-	/// Missing token {token:?} in position {position:?}: {text:?}
+	/// Missing token {token:?} in position {token_index:?}: {text:?}
 	MissingToken {
 		token: String,
-		/// A 1 indexed position of the tokens
-		position: usize,
+		/// 1 indexed
+		token_index: usize,
+		/// 1 indexed
+		line_index: usize,
 		text: String,
 	},
 }
