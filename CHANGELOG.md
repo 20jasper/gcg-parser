@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0](https://github.com/20jasper/gcg-parser/compare/v0.1.4...v0.2.0) - 2024-02-10
+
+### Documentation
+- update changelog format
+
 ## [0.1.4](https://github.com/20jasper/gcg-parser/compare/v0.1.3...v0.1.4) - 2024-02-10
 
 ### Other
