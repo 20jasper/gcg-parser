@@ -37,7 +37,7 @@ impl Player {
 	///
 	/// # Errors
 	///
-	/// If the nickname or full name tokens are missing, a `MissingToken` error is returned with the position and text information.
+	/// If the nickname or full name tokens are missing, a [`MissingToken`](GcgError::MissingToken) error is returned
 	pub fn build(text: &str) -> Result<Player> {
 		let mut tokens = text.splitn(3, ' ').skip(1);
 
