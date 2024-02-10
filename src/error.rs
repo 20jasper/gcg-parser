@@ -13,6 +13,11 @@ pub enum GcgError {
 		line_index: usize,
 		text: String,
 	},
+	/// Missing required pragma {keyword:?}
+	MissingPragma {
+		/// indicates type of pragma
+		keyword: String,
+	},
 }
 
 pub type Result<T> = core::result::Result<T, GcgError>;

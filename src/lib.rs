@@ -12,4 +12,86 @@
 
 pub mod error;
 pub mod player;
+
+use error::{GcgError, Result};
 pub use player::Player;
+
+#[derive(Debug, PartialEq)]
+pub struct Gcg {
+	pub player1: Player,
+	pub player2: Player,
+}
+
+impl Gcg {
+	pub fn build(text: &str) -> Result<Gcg> {
+		let mut player1 = None::<Player>;
+		let mut player2 = None::<Player>;
+
+		for (i, line) in text.lines().enumerate() {
+			if line.starts_with("#player1") {
+				let player = Player::build(line, i)?;
+				player1 = Some(player);
+			} else if line.starts_with("#player2") {
+				let player = Player::build(line, i)?;
+				player2 = Some(player);
+			} else {
+				println!("unknown pragma {}, {}", line, i + 1);
+			}
+		}
+
+		let gcg = Gcg {
+			player1: player1.ok_or_else(|| GcgError::MissingPragma {
+				keyword: "player1".to_string(),
+			})?,
+			player2: player2.ok_or_else(|| GcgError::MissingPragma {
+				keyword: "player2".to_string(),
+			})?,
+		};
+
+		Ok(gcg)
+	}
+}
+
+#[cfg(test)]
+mod tests {
+	use super::*;
+	use anyhow::{Ok, Result};
+
+	#[test]
+	fn should_parse_player_names() -> Result<()> {
+		let text = [
+			"#player1 20jasper Jacob Asper",
+			"#player2 xXFerrisXx Ferris The Crab",
+		]
+		.join("\n");
+
+		let gcg = Gcg::build(&text)?;
+
+		assert_eq!(
+			gcg,
+			Gcg {
+				player1: Player {
+					nickname: "20jasper".to_string(),
+					full_name: "Jacob Asper".to_string(),
+				},
+				player2: Player {
+					nickname: "xXFerrisXx".to_string(),
+					full_name: "Ferris The Crab".to_string(),
+				},
+			}
+		);
+
+		Ok(())
+	}
+
+	#[test]
+	fn should_error_when_missing_player() {
+		let text = ["#player2 20jasper Jacob Asper"].join("\n");
+
+		let error = Gcg::build(&text)
+			.unwrap_err()
+			.to_string();
+
+		assert!(error.contains("player1"));
+	}
+}
