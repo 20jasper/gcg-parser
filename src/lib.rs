@@ -3,6 +3,12 @@
 //! [<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs" height="20">](https://docs.rs/gcg-parser)
 //! <br>
 //! gcg-parser converts "generic crossword game" (GCG) files into more convenient formats
+//!
+//! GCG files are used as a standard for a variety of crossword games, most notably Scrabble
+//!
+//! ## Specification
+//!
+//! This parser abides by the [Poslfit GCG specification](https://www.poslfit.com/scrabble/gcg/)
 
 pub mod error;
 use error::{GcgError, Result};
