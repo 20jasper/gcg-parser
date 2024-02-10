@@ -35,7 +35,10 @@ impl Gcg {
 				let player = Player::build(line, i)?;
 				player2 = Some(player);
 			} else {
-				println!("unknown pragma {}, {}", line, i + 1);
+				return Err(GcgError::UnknownPragma {
+					line: text.to_string(),
+					line_index: i.saturating_add(1),
+				});
 			}
 		}
 
@@ -90,8 +93,22 @@ mod tests {
 
 		let error = Gcg::build(&text)
 			.unwrap_err()
-			.to_string();
+			.to_string()
+			.to_lowercase();
 
 		assert!(error.contains("player1"));
+	}
+
+	#[test]
+	fn should_error_with_unknown_pragma() {
+		let text = ["#whatisthispragma what idk"].join("\n");
+
+		let error = Gcg::build(&text)
+			.unwrap_err()
+			.to_string()
+			.to_lowercase();
+
+		assert!(error.contains("unknown pragma"));
+		assert!(error.contains("#whatisthispragma"));
 	}
 }

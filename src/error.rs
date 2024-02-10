@@ -18,6 +18,12 @@ pub enum GcgError {
 		/// indicates type of pragma
 		keyword: String,
 	},
+	/// Unknown pragma on line {line_index:?}: {line:?}
+	UnknownPragma {
+		line: String,
+		// 1 indexed
+		line_index: usize,
+	},
 }
 
 pub type Result<T> = core::result::Result<T, GcgError>;
