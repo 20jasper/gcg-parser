@@ -11,78 +11,104 @@
 //! This parser abides by the [Poslfit GCG specification](https://www.poslfit.com/scrabble/gcg/)
 
 pub mod error;
+mod player;
+
 use error::{GcgError, Result};
+use player::Player;
 
 #[derive(Debug, PartialEq)]
-pub struct Player {
-	pub nickname: String,
-	pub full_name: String,
+pub struct Gcg {
+	pub player1: Player,
+	pub player2: Player,
 }
 
-impl Player {
-	/// The player pragma indicates the nickname and full name of a player.
-	///
-	/// # Examples
-	///
-	/// ```
-	/// # use gcg_parser::Player;
-	///
-	/// let text = "#player1 xXFerrisXx Ferris The Crab";
-	/// let player = Player::build(text)?;
-	///
-	/// assert_eq!(
-	///     player,
-	///     Player {
-	///         nickname: "xXFerrisXx".to_string(),
-	///         full_name: "Ferris The Crab".to_string(),
-	///     }
-	/// );
-	///
-	/// # Ok::<(), gcg_parser::error::GcgError>(())
-	/// ```
-	///
-	/// # Errors
-	///
-	/// If the nickname or full name tokens are missing, a [`MissingToken`](GcgError::MissingToken) error is returned
-	pub fn build(text: &str) -> Result<Player> {
-		let mut tokens = text.splitn(3, ' ').skip(1);
+impl Gcg {
+	pub fn build(text: &str) -> Result<Gcg> {
+		let mut player1 = None::<Player>;
+		let mut player2 = None::<Player>;
 
-		let nickname = tokens
-			.next()
-			.ok_or_else(|| GcgError::MissingToken {
-				token: "nickname".to_string(),
-				position: 2,
-				text: text.to_string(),
-			})?
-			.to_string();
-		let full_name = tokens
-			.next()
-			.ok_or_else(|| GcgError::MissingToken {
-				token: "full_name".to_string(),
-				position: 3,
-				text: text.to_string(),
-			})?
-			.to_string();
+		for (i, line) in text.lines().enumerate() {
+			if line.starts_with("#player1") {
+				let player = Player::build(line, i)?;
+				player1 = Some(player);
+			} else if line.starts_with("#player2") {
+				let player = Player::build(line, i)?;
+				player2 = Some(player);
+			} else {
+				return Err(GcgError::UnknownPragma {
+					line: text.to_string(),
+					line_index: i.saturating_add(1),
+				});
+			}
+		}
 
-		Ok(Player {
-			nickname,
-			full_name,
-		})
+		let gcg = Gcg {
+			player1: player1.ok_or_else(|| GcgError::MissingPragma {
+				keyword: "player1".to_string(),
+			})?,
+			player2: player2.ok_or_else(|| GcgError::MissingPragma {
+				keyword: "player2".to_string(),
+			})?,
+		};
+
+		Ok(gcg)
 	}
 }
 
 #[cfg(test)]
 mod tests {
 	use super::*;
+	use anyhow::{Ok, Result};
 
 	#[test]
-	fn should_return_error_with_field_name_and_position() {
-		let text = "#player1 20jasper";
-		let error = Player::build(text)
-			.unwrap_err()
-			.to_string();
+	fn should_parse_player_names() -> Result<()> {
+		let text = [
+			"#player1 20jasper Jacob Asper",
+			"#player2 xXFerrisXx Ferris The Crab",
+		]
+		.join("\n");
 
-		assert!(error.contains("full_name"));
-		assert!(error.contains("position 3"));
+		let gcg = Gcg::build(&text)?;
+
+		assert_eq!(
+			gcg,
+			Gcg {
+				player1: Player {
+					nickname: "20jasper".to_string(),
+					full_name: "Jacob Asper".to_string(),
+				},
+				player2: Player {
+					nickname: "xXFerrisXx".to_string(),
+					full_name: "Ferris The Crab".to_string(),
+				},
+			}
+		);
+
+		Ok(())
+	}
+
+	#[test]
+	fn should_error_when_missing_player() {
+		let text = ["#player2 20jasper Jacob Asper"].join("\n");
+
+		let error = Gcg::build(&text)
+			.unwrap_err()
+			.to_string()
+			.to_lowercase();
+
+		assert!(error.contains("player1"));
+	}
+
+	#[test]
+	fn should_error_with_unknown_pragma() {
+		let text = ["#whatisthispragma what idk"].join("\n");
+
+		let error = Gcg::build(&text)
+			.unwrap_err()
+			.to_string()
+			.to_lowercase();
+
+		assert!(error.contains("unknown pragma"));
+		assert!(error.contains("#whatisthispragma"));
 	}
 }
