@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.2.0](https://github.com/20jasper/gcg-parser/compare/v0.1.4...v0.2.0) - 2024-02-10
 
+### Deprecated
+- remove Player from public API
+- change GcgError position field to token_index
+
+### Added
+- parse multiple lines. Adds error variant
+- and add line_index field
+
+### Fixed
+- handle unknown pragma. Adds error variant
+
 ### Documentation
 - update changelog format
 
