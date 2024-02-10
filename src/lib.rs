@@ -11,10 +11,10 @@
 //! This parser abides by the [Poslfit GCG specification](https://www.poslfit.com/scrabble/gcg/)
 
 pub mod error;
-pub mod player;
+mod player;
 
 use error::{GcgError, Result};
-pub use player::Player;
+use player::Player;
 
 #[derive(Debug, PartialEq)]
 pub struct Gcg {

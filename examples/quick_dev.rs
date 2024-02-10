@@ -1,6 +1,13 @@
-use gcg_parser::Player;
+use gcg_parser::Gcg;
 fn main() {
-	let text = "#player1 20jasper";
+	let lines = [
+		"#player1 20jasper Jasper",
+		"#player2 xXFerrisXx Ferris The Crab",
+		"#description 20jasper vs xXFerrisXx",
+	];
+	let text = lines.join("\n");
 
-	println!("{}", Player::build(text).unwrap_err());
+	let gcg = Gcg::build(&text).unwrap();
+
+	println!("{gcg:?}");
 }
