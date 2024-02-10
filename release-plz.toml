@@ -1,2 +1,14 @@
 [workspace]
-changelog_config = "cliff.toml"
+[changelog]
+commit_parsers = [
+  { message = "^feat", group = "added" },
+  { message = "^deprecated", group = "deprecated" },
+  { message = "^doc", group = "Documentation" },
+  { message = "^refactor", group = "Refactor" },
+  { message = "^fix", group = "fixed" },
+  { message = "^security", group = "security" },
+  { message = "^test", group = "Testing" },
+  { message = "^chore", skip = true },
+  { message = "^ci", skip = true },
+  { message = "^.*", skip = true },
+]
