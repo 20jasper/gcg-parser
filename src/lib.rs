@@ -28,6 +28,7 @@ impl Gcg {
 	pub fn build(text: &str) -> Result<Gcg> {
 		let mut player1 = None::<Player>;
 		let mut player2 = None::<Player>;
+		let mut description = None::<String>;
 
 		for (i, line) in text.lines().enumerate() {
 			if line.starts_with("#player1") {
@@ -36,6 +37,10 @@ impl Gcg {
 			} else if line.starts_with("#player2") {
 				let player = Player::build(line, i)?;
 				player2 = Some(player);
+			} else if line.starts_with("#description") {
+				let (_, desc) = line.split_once(' ').unwrap_or_default();
+
+				description = Some(desc.to_string());
 			} else {
 				return Err(GcgError::UnknownPragma {
 					line: text.to_string(),
@@ -51,7 +56,7 @@ impl Gcg {
 			player2: player2.ok_or_else(|| GcgError::MissingPragma {
 				keyword: "player2".to_string(),
 			})?,
-			description: None,
+			description,
 		};
 
 		Ok(gcg)
