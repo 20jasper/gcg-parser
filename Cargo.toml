@@ -14,7 +14,7 @@ include = ["src/**/*", "README.md", "CHANGELOG.md"]
 
 [dependencies]
 displaydoc = "0.2.4"
-thiserror = "1.0.56"
+thiserror = "1.0.57"
 
 [dev-dependencies]
 anyhow = "1.0.79"
