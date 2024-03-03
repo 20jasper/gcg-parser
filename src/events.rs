@@ -10,7 +10,7 @@ pub struct EventWithNote {
 	note: Option<String>,
 }
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Eq, Clone, Default)]
 pub struct Events {
 	events: Vec<EventWithNote>,
 }
