@@ -6,7 +6,7 @@ use crate::token;
 #[derive(Display, Error, Debug)]
 #[allow(clippy::module_name_repetitions)]
 pub enum Error {
-	/// Error on line {line_index:?}: {source:?}
+	/// Error on line {line_index:?}: {source}
 	InvalidLine {
 		/// 1 indexed
 		line_index: usize,
