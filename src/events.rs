@@ -1,4 +1,4 @@
-use crate::error::{GcgError, Result};
+use crate::error::Result;
 
 mod event;
 pub use event::Coordinate;

@@ -1,4 +1,4 @@
-use crate::error::Result;
+use crate::error::{GcgError, Result};
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum Coordinate {
@@ -23,15 +23,18 @@ impl Coordinate {
 	///
 	pub fn build(x: &str) -> Result<Self> {
 		let mut chars = x.chars();
-		let first = chars.next().unwrap();
-		let second = chars.next().unwrap();
 
-		if first.is_alphabetic() {
-			Ok(Coordinate::Vertical(first, second.to_digit(10).unwrap()))
-		} else if first.is_ascii_digit() {
-			Ok(Coordinate::Horizontal(first.to_digit(10).unwrap(), second))
-		} else {
-			todo!("error")
+		match (chars.next(), chars.next()) {
+			(Some(first), Some(second)) if first.is_alphabetic() && second.is_ascii_digit() => {
+				Ok(Coordinate::Vertical(first, second.to_digit(10).unwrap()))
+			}
+			(Some(first), Some(second)) if first.is_ascii_digit() && second.is_alphabetic() => {
+				Ok(Coordinate::Horizontal(first.to_digit(10).unwrap(), second))
+			}
+			_ => Err(GcgError::InvalidToken {
+				token: "coordinate".to_string(),
+				text: x.to_string(),
+			}),
 		}
 	}
 }
@@ -91,15 +94,19 @@ impl Event {
 
 #[cfg(test)]
 mod tests {
+	use std::error;
+
 	use super::*;
 	use anyhow::{Ok, Result};
 
 	#[test]
-	fn should_parse_vertical_coordinates() -> Result<()> {
-		let s = "a1";
-		let coordinate = Coordinate::build(s)?;
+	fn should_not_parse_invalid_coords() -> Result<()> {
+		let s = "whatIsThis?";
+		let coordinates = Coordinate::build(s);
 
-		assert_eq!(coordinate, Coordinate::Vertical('a', 1));
+		let error = coordinates.unwrap_err().to_string();
+
+		assert!(error.contains(s));
 
 		Ok(())
 	}

@@ -2,6 +2,16 @@ use displaydoc::Display;
 use thiserror::Error;
 
 #[derive(Display, Error, Debug)]
+enum LineError {
+	/// Error on line {line}: {source}
+	LineError {
+		line: usize,
+		#[source]
+		source: GcgError,
+	},
+}
+
+#[derive(Display, Error, Debug)]
 #[allow(clippy::module_name_repetitions)]
 pub enum GcgError {
 	/// Missing token {token:?} in position {token_index:?}: {text:?}
@@ -13,6 +23,8 @@ pub enum GcgError {
 		line_index: usize,
 		text: String,
 	},
+	/// Invalid token {token:?}: {text:?}
+	InvalidToken { token: String, text: String },
 	/// Missing required pragma {keyword:?}
 	MissingPragma {
 		/// indicates type of pragma
