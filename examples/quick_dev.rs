@@ -1,4 +1,5 @@
-use gcg_parser::Gcg;
+use gcg_parser::{events::Coordinate, Gcg};
+
 fn main() {
 	let lines = [
 		"#player1 20jasper Jasper",
@@ -10,4 +11,6 @@ fn main() {
 	let gcg = Gcg::build(&text).unwrap();
 
 	println!("{gcg:?}");
+
+	Coordinate::build("a1").unwrap();
 }
