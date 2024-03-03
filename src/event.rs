@@ -2,8 +2,24 @@ use crate::error::{GcgError, Result};
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum Coordinate {
-	Horizontal(char, u8),
-	Vertical(u8, char),
+	Horizontal(u32, char),
+	Vertical(char, u32),
+}
+
+impl Coordinate {
+	pub fn build(x: &str) -> Result<Self> {
+		let mut chars = x.chars();
+		let first = chars.next().unwrap();
+		let second = chars.next().unwrap();
+
+		if first.is_alphabetic() {
+			Ok(Coordinate::Vertical(first, second.to_digit(10).unwrap()))
+		} else if first.is_ascii_digit() {
+			Ok(Coordinate::Horizontal(first.to_digit(10).unwrap(), second))
+		} else {
+			todo!("error")
+		}
+	}
 }
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
@@ -37,7 +53,26 @@ pub enum Event {
 
 impl Event {
 	pub fn build(line: &str) -> Result<Self> {
-		todo!()
+		let rest = line.strip_prefix('>').unwrap();
+		let (nickname, rest) = rest.split_once(": ").unwrap();
+		let (rack, rest) = rest.split_once(' ').unwrap();
+		let (coordinate, rest) = rest.split_once(' ').unwrap();
+		let (score, rest) = rest.split_once(' ').unwrap();
+		let total_score = rest.trim_end();
+
+		dbg!(rack);
+
+		Ok(Event::RegularPlay {
+			nickname: nickname.to_string(),
+			rack: rack
+				.chars()
+				.map(Tile::Regular)
+				.collect(),
+			coordinate: Coordinate::build(coordinate).unwrap(),
+			word_formed: String::new(),
+			score: 10,
+			total_score: 10,
+		})
 	}
 }
 
@@ -89,7 +124,7 @@ mod tests {
 				Tile::Regular('T'),
 				Tile::Regular('W'),
 			],
-			coordinate: Coordinate::Horizontal('F', 8),
+			coordinate: Coordinate::Horizontal(8, 'F'),
 			word_formed: "WHAT".to_string(),
 			score: 20,
 			total_score: 20,
