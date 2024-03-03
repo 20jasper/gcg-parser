@@ -11,6 +11,7 @@
 //! This parser abides by the [Poslfit GCG specification](https://www.poslfit.com/scrabble/gcg/)
 
 pub mod error;
+mod events;
 mod player;
 
 use error::{GcgError, Result};
@@ -41,6 +42,7 @@ impl Gcg {
 				let (_, desc) = line.split_once(' ').unwrap_or_default();
 
 				description = Some(desc.to_string());
+			} else if line.starts_with('>') {
 			} else {
 				return Err(GcgError::UnknownPragma {
 					line: text.to_string(),

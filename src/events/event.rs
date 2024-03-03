@@ -1,4 +1,4 @@
-use crate::error::{GcgError, Result};
+use crate::error::Result;
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum Coordinate {
@@ -72,33 +72,6 @@ impl Event {
 			score: score.parse().unwrap(),
 			total_score: total_score.parse().unwrap(),
 		})
-	}
-}
-
-#[derive(Debug, PartialEq, Eq, Clone)]
-pub struct EventWithNote {
-	event: Event,
-	note: Option<String>,
-}
-
-#[derive(Debug, PartialEq, Eq, Clone)]
-pub struct Events {
-	events: Vec<EventWithNote>,
-}
-
-impl Events {
-	pub fn new() -> Self {
-		Self { events: vec![] }
-	}
-
-	pub fn from_slice(slice: &[EventWithNote]) -> Self {
-		Self {
-			events: slice.to_vec(),
-		}
-	}
-
-	pub fn add(&mut self, line: &str) -> Result<()> {
-		todo!()
 	}
 }
 
