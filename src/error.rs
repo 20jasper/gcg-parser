@@ -13,6 +13,8 @@ pub enum GcgError {
 		line_index: usize,
 		text: String,
 	},
+	/// Invalid token {token:?}: {text:?}
+	InvalidToken { token: String, text: String },
 	/// Missing required pragma {keyword:?}
 	MissingPragma {
 		/// indicates type of pragma
