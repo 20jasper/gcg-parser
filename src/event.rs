@@ -57,10 +57,9 @@ impl Event {
 		let (nickname, rest) = rest.split_once(": ").unwrap();
 		let (rack, rest) = rest.split_once(' ').unwrap();
 		let (coordinate, rest) = rest.split_once(' ').unwrap();
+		let (word_formed, rest) = rest.split_once(' ').unwrap();
 		let (score, rest) = rest.split_once(' ').unwrap();
 		let total_score = rest.trim_end();
-
-		dbg!(rack);
 
 		Ok(Event::RegularPlay {
 			nickname: nickname.to_string(),
@@ -69,9 +68,9 @@ impl Event {
 				.map(Tile::Regular)
 				.collect(),
 			coordinate: Coordinate::build(coordinate).unwrap(),
-			word_formed: String::new(),
-			score: 10,
-			total_score: 10,
+			word_formed: word_formed.to_string(),
+			score: score.parse().unwrap(),
+			total_score: total_score.parse().unwrap(),
 		})
 	}
 }
