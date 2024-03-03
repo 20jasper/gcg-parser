@@ -6,6 +6,7 @@ commit_parsers = [
   { message = "^doc", group = "Documentation" },
   { message = "^refactor", group = "Refactor" },
   { message = "^fix", group = "fixed" },
+  { message = "^remove", group = "remove" },
   { message = "^security", group = "security" },
   { message = "^test", group = "Testing" },
   { message = "^chore(deps)", group = "Dependencies" },
