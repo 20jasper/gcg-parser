@@ -1,4 +1,4 @@
-use crate::error::{GcgError, Result};
+use crate::token::{Error, Result};
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum Coordinate {
@@ -31,7 +31,7 @@ impl Coordinate {
 			(Some(first), Some(second)) if first.is_ascii_digit() && second.is_alphabetic() => {
 				Ok(Coordinate::Horizontal(first.to_digit(10).unwrap(), second))
 			}
-			_ => Err(GcgError::InvalidToken {
+			_ => Err(Error::InvalidToken {
 				token: "coordinate".to_string(),
 				text: x.to_string(),
 			}),

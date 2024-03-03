@@ -1,18 +1,18 @@
 use displaydoc::Display;
 use thiserror::Error;
 
+use crate::token;
+
 #[derive(Display, Error, Debug)]
 #[allow(clippy::module_name_repetitions)]
-pub enum GcgError {
-	/// Missing token {token:?} in position {token_index:?}: {text:?}
-	MissingToken {
-		token: String,
+pub enum Error {
+	/// Error on line {line_index:?}: {source:?}
+	InvalidLine {
 		/// 1 indexed
-		token_index: usize,
-		text: String,
+		line_index: usize,
+		#[source]
+		source: token::Error,
 	},
-	/// Invalid token {token:?}: {text:?}
-	InvalidToken { token: String, text: String },
 	/// Missing required pragma {keyword:?}
 	MissingPragma {
 		/// indicates type of pragma
@@ -26,4 +26,4 @@ pub enum GcgError {
 	},
 }
 
-pub type Result<T> = core::result::Result<T, GcgError>;
+pub type Result<T> = core::result::Result<T, Error>;

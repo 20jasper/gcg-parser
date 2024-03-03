@@ -1,7 +1,8 @@
 pub mod events;
 mod player;
+pub mod token;
 
-use crate::error::{GcgError, Result};
+use crate::error::{Error, Result};
 pub use player::Player;
 
 #[derive(Debug, PartialEq)]
@@ -20,17 +21,23 @@ impl Gcg {
 
 		for (i, line) in text.lines().enumerate() {
 			if line.starts_with("#player1") {
-				let player = Player::build(line)?;
+				let player = Player::build(line).map_err(|e| Error::InvalidLine {
+					line_index: i.saturating_add(1),
+					source: e,
+				})?;
 				player1 = Some(player);
 			} else if line.starts_with("#player2") {
-				let player = Player::build(line)?;
+				let player = Player::build(line).map_err(|e| Error::InvalidLine {
+					line_index: i.saturating_add(1),
+					source: e,
+				})?;
 				player2 = Some(player);
 			} else if line.starts_with("#description") {
 				let (_, desc) = line.split_once(' ').unwrap_or_default();
 
 				description = Some(desc.to_string());
 			} else {
-				return Err(GcgError::UnknownPragma {
+				return Err(Error::UnknownPragma {
 					line: text.to_string(),
 					line_index: i.saturating_add(1),
 				});
@@ -38,10 +45,10 @@ impl Gcg {
 		}
 
 		let gcg = Gcg {
-			player1: player1.ok_or_else(|| GcgError::MissingPragma {
+			player1: player1.ok_or_else(|| Error::MissingPragma {
 				keyword: "player1".to_string(),
 			})?,
-			player2: player2.ok_or_else(|| GcgError::MissingPragma {
+			player2: player2.ok_or_else(|| Error::MissingPragma {
 				keyword: "player2".to_string(),
 			})?,
 			description,
