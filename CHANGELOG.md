@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0](https://github.com/20jasper/gcg-parser/compare/v0.3.0...v0.4.0) - 2024-03-03
+
+### Added
+- [**breaking**] Add `Coordinates` struct to parse event coordinates ([#41](https://github.com/20jasper/gcg-parser/pull/41))
+
 ## [0.3.0](https://github.com/20jasper/gcg-parser/compare/v0.2.0...v0.3.0) - 2024-02-16
 
 ### Added
