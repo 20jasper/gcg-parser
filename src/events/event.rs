@@ -124,6 +124,7 @@ mod tests {
 		Ok(())
 	}
 
+	#[test]
 	fn should_not_parse_invalid_coords() -> Result<()> {
 		let s = "whatIsThis?";
 		let coordinates = Coordinate::build(s);
