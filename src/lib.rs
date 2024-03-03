@@ -13,4 +13,4 @@
 pub mod error;
 mod gcg;
 
-pub use gcg::{events, Gcg, Player};
+pub use gcg::{events, token, Gcg, Player};

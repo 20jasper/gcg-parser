@@ -1,4 +1,4 @@
-use crate::error::{GcgError, Result};
+use crate::token::{Error, Result};
 
 #[derive(Debug, PartialEq)]
 pub struct Player {
@@ -36,7 +36,7 @@ impl Player {
 		let mut get_token = |token: &str, token_index| {
 			tokens
 				.next()
-				.ok_or_else(|| GcgError::MissingToken {
+				.ok_or_else(|| Error::MissingToken {
 					token: token.to_string(),
 					text: text.to_string(),
 					token_index,
