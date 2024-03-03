@@ -9,8 +9,6 @@ pub enum GcgError {
 		token: String,
 		/// 1 indexed
 		token_index: usize,
-		/// 1 indexed
-		line_index: usize,
 		text: String,
 	},
 	/// Invalid token {token:?}: {text:?}

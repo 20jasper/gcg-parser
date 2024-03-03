@@ -20,10 +20,10 @@ impl Gcg {
 
 		for (i, line) in text.lines().enumerate() {
 			if line.starts_with("#player1") {
-				let player = Player::build(line, i)?;
+				let player = Player::build(line)?;
 				player1 = Some(player);
 			} else if line.starts_with("#player2") {
-				let player = Player::build(line, i)?;
+				let player = Player::build(line)?;
 				player2 = Some(player);
 			} else if line.starts_with("#description") {
 				let (_, desc) = line.split_once(' ').unwrap_or_default();

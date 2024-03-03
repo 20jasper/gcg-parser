@@ -14,7 +14,7 @@ impl Player {
 	/// # use gcg_parser::Player;
 	/// # use anyhow::Ok;
 	/// let text = "#player1 xXFerrisXx Ferris The Crab";
-	/// let player = Player::build(text, 0)?;
+	/// let player = Player::build(text)?;
 	///
 	/// assert_eq!(
 	///     player,
@@ -28,8 +28,9 @@ impl Player {
 	///
 	/// # Errors
 	///
-	/// If the nickname or full name tokens are missing, a [`MissingToken`](GcgError::MissingToken) error is returned
-	pub fn build(text: &str, line_index: usize) -> Result<Player> {
+	/// If the nickname or full name tokens are missing, a
+	/// [`MissingToken`](GcgError::MissingToken) error is returned
+	pub fn build(text: &str) -> Result<Player> {
 		let mut tokens = text.splitn(3, ' ').skip(1);
 
 		let mut get_token = |token: &str, token_index| {
@@ -39,7 +40,6 @@ impl Player {
 					token: token.to_string(),
 					text: text.to_string(),
 					token_index,
-					line_index: line_index.saturating_add(1),
 				})
 		};
 
@@ -60,7 +60,7 @@ mod tests {
 	#[test]
 	fn should_return_error_with_field_name_and_position() {
 		let text = "#player1 20jasper";
-		let error = Player::build(text, 0)
+		let error = Player::build(text)
 			.unwrap_err()
 			.to_string();
 
