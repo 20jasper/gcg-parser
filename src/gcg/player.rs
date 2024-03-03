@@ -9,6 +9,23 @@ pub struct Player {
 impl Player {
 	/// The player pragma indicates the nickname and full name of a player.
 	///
+	/// # Examples
+	/// ```
+	/// # use gcg_parser::Player;
+	/// # use anyhow::Ok;
+	/// let text = "#player1 xXFerrisXx Ferris The Crab";
+	/// let player = Player::build(text, 0)?;
+	///
+	/// assert_eq!(
+	///     player,
+	///     Player {
+	///         nickname: "xXFerrisXx".to_string(),
+	///         full_name: "Ferris The Crab".to_string(),
+	///     }
+	/// );
+	/// # Ok(())
+	/// ```
+	///
 	/// # Errors
 	///
 	/// If the nickname or full name tokens are missing, a [`MissingToken`](GcgError::MissingToken) error is returned
@@ -39,20 +56,6 @@ impl Player {
 #[cfg(test)]
 mod tests {
 	use super::*;
-
-	#[test]
-	fn should_parse_player_from_text() {
-		let text = "#player1 xXFerrisXx Ferris The Crab";
-		let player = Player::build(text, 0).unwrap();
-
-		assert_eq!(
-			player,
-			Player {
-				nickname: "xXFerrisXx".to_string(),
-				full_name: "Ferris The Crab".to_string(),
-			}
-		);
-	}
 
 	#[test]
 	fn should_return_error_with_field_name_and_position() {
