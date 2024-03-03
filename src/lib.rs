@@ -11,7 +11,7 @@
 //! This parser abides by the [Poslfit GCG specification](https://www.poslfit.com/scrabble/gcg/)
 
 pub mod error;
-mod events;
+pub mod events;
 mod player;
 
 use error::{GcgError, Result};

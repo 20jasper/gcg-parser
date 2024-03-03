@@ -7,6 +7,20 @@ pub enum Coordinate {
 }
 
 impl Coordinate {
+	/// # Examples
+	/// ```
+	/// # use gcg_parser::events::Coordinate;
+	/// # use anyhow::Ok;
+	///
+	/// let coordinate = Coordinate::build("a1")?;
+	/// assert_eq!(coordinate, Coordinate::Vertical('a', 1));
+	///
+	/// let coordinate = Coordinate::build("8n")?;
+	/// assert_eq!(coordinate, Coordinate::Horizontal(8, 'n'));
+	///
+	/// # Ok(())
+	/// ```
+	///
 	pub fn build(x: &str) -> Result<Self> {
 		let mut chars = x.chars();
 		let first = chars.next().unwrap();
@@ -79,6 +93,16 @@ impl Event {
 mod tests {
 	use super::*;
 	use anyhow::{Ok, Result};
+
+	#[test]
+	fn should_parse_vertical_coordinates() -> Result<()> {
+		let s = "a1";
+		let coordinate = Coordinate::build(s)?;
+
+		assert_eq!(coordinate, Coordinate::Vertical('a', 1));
+
+		Ok(())
+	}
 
 	#[test]
 	fn should_parse_regular_play() -> Result<()> {

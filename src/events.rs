@@ -1,6 +1,7 @@
 use crate::error::{GcgError, Result};
 
 mod event;
+pub use event::Coordinate;
 use event::Event;
 
 #[derive(Debug, PartialEq, Eq, Clone)]
