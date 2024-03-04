@@ -50,6 +50,7 @@ mod_module_files = "deny"
 pedantic = "warn"
 missing_errors_doc = "allow"
 missing_panics_doc = "allow"
+must_use_candidate = "allow"
 ## cargo
 negative_feature_names = "warn"
 redundant_feature_names = "warn"
