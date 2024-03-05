@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.1](https://github.com/20jasper/gcg-parser/compare/v0.5.0...v0.5.1) - 2024-03-05
+
+### Fixed
+- package metadata: categories ([#49](https://github.com/20jasper/gcg-parser/pull/49))
+
 ## [0.5.0](https://github.com/20jasper/gcg-parser/compare/v0.4.0...v0.5.0) - 2024-03-05
 
 ### Documentation

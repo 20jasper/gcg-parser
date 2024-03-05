@@ -1,6 +1,6 @@
 [package]
 name = "gcg-parser"
-version = "0.5.0"
+version = "0.5.1"
 authors = ["Jacob Asper <jacobasper191@gmail.com>"]
 description = "Parser and Data Structures for the GCG file format"
 documentation = "https://docs.rs/gcg-parser/latest/gcg_parser/index.html"
