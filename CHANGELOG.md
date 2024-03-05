@@ -6,6 +6,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0](https://github.com/20jasper/gcg-parser/compare/v0.4.0...v0.5.0) - 2024-03-05
+
+### Documentation
+- Player doctest
+
+### Refactor
+- [**breaking**] split GcgError into gcg::error and token::error
+
+### Added
+- Player struct and parsing
+- InvalidLine error ([#45](https://github.com/20jasper/gcg-parser/pull/45))
+
+### Fixed
+- display print instead of debug InvalidLine Error ([#46](https://github.com/20jasper/gcg-parser/pull/46))
+
+### Remove
+- [**breaking**] remove line field from MissingToken error
+
 ## [0.4.0](https://github.com/20jasper/gcg-parser/compare/v0.3.0...v0.4.0) - 2024-03-03
 
 ### Added
