@@ -5,7 +5,7 @@
 [<img alt="docs.rs" src="https://img.shields.io/badge/docs.rs-gcg--parser-66c2a5?style=for-the-badge&labelColor=555555&logo=docs.rs" height="20">](https://docs.rs/gcg-parser)
 [<img alt="build status" src="https://img.shields.io/github/actions/workflow/status/20jasper/gcg-parser/verify.yaml?branch=main&style=for-the-badge" height="20">](https://github.com/20jasper/gcg-parser/actions?query=branch%3Amain)
 
-A parser for "Generic Crossword Game" files
+Parser and Data Structures for the "Generic Crossword Game" file format
 
 GCG files are used as a standard for a variety of crossword games, most notably Scrabble
 
